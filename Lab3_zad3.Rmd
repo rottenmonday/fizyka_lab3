@@ -4,6 +4,7 @@ author: "Aleksander Wiśniewski"
 date: "28 05 2020"
 header-includes:
    - \usepackage{amsmath}
+   - \usepackage{gensymb}
 output: pdf_document
 ---
 
@@ -14,8 +15,125 @@ library(ggplot2)
 library(knitr)
 library(kableExtra)
 source('Lab3_zad3_derivs.R')
+source('Lab3_zad2_derivs.R')
 options(OutDec= ",", scipen = 999)
 ```
+
+```{r, echo = FALSE}
+a <- "c_{wH_2O}"
+b <- "m_k"
+c <- "m_{2H_2O}"
+d <- "T_{2H_2O}"
+e <- "T_{1H_2O}"
+f <- "T_k"
+g <- "m_{1H_2O}"
+ck <- "c_k"
+```
+
+# Wyznaczenie ciepła właściwego kalorymetru
+
+## Cel
+
+Celem drugiego zadania jest wyznaczenie ciepła właściwego kalorymetru. 
+
+## Opis eksperymentu
+
+W chwili początkowej kalorymetr o masie $`r b`$ wypełniony jest wodą o masie $`r g`$. Wewnątrz kalorymetru panuje stan równowagi termodynamicznej, czyli temperatura kalorymetru jest równa temperaturze wody i wynosi $`r e`$. Dolanie do kalorymetru wody o masie $`r c`$ i temperaturze $`r d`$ > $`r e`$ spowoduje oddanie części energii dolanej wody do kalorymetru i wody wcześniej się w nim znajdującej, ponieważ temperatura dolewanej wody jest większa niż temperatura układu. Po pewnym czasie układ osiągnie stan równowagi termodynamicznej, czyli temperatura wymieszanej wody oraz kalorymetru będzie taka sama i równa $`r f`$. Bilans energetyczny opisujący takie zdarzenie jest następujący:
+
+$$`r c` `r a`(`r d` - `r f`) = `r g``r a`(`r f` - `r e`) + `r b`c_{wk}(`r f` - `r e`)$$
+Lewa strona równania opisuje energię oddaną przez dolaną wodę, natomiast prawa strona energię otrzymaną przez kalorymetr oraz wodę, która się w nim znajdowała. Po przeniesieniu pierwszego składnika prawej strony na drugą oraz podzieleniu równania przez $`r b`(`r f` - `r e`)$ otrzymano wzór na ciepło właściwe kalorymetru:
+
+$$c_k = \frac{`r a`}{`r b`}(`r c`\frac{`r d` - `r f`}{`r f` - `r e`} - `r g`)$$
+
+## Wyniki
+
+```{r, echo = FALSE}
+pomiary <- as.data.frame(read_excel(path = "pomiary_wozniak.xlsx", sheet = 'zad2'))
+
+cww <- 4183
+mk <- 0.765
+
+pom_tab <- pomiary[, c(-1, -2, -8)]
+
+cwk <- cww/mk * (pom_tab[, 3] * 
+            (pom_tab[, 4] - pom_tab[, 5]) / 
+            (pom_tab[, 5] - pom_tab[, 2]) - 
+            pom_tab[, 1])
+a <- cww
+b <- mk 
+c <- pom_tab[, 3]
+d <- pom_tab[, 4]
+e <- pom_tab[, 2]
+f <- pom_tab[, 5]
+g <- pom_tab[, 1]
+pom_tab <- cbind(pom_tab, cwk)
+kable(pom_tab, caption="Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O}$", "$T_{1H_2O}$", "$m_{2H_2O}$", "$T_{2H_2O}$", "$T_{k}$", "$c_{wk}$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+```
+
+Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatnie kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru.
+
+## Analiza niepewności pomiarowych
+
+Wszystkie pomiary obarczone są niepewnością pomiarową typu B. Aby wyznaczyć niepewność wyznaczonego ciepła właściwego kalorymetru skorzystamy z prawa propagacji niepewności pomiarowej:
+
+$$u_B(c_k)=\sqrt{
+\begin{aligned}
+(\frac{\partial{c_k}}{\partial{c_{wH2O}}})^2u_B^2(c_{wH2O}) + (\frac{\partial{c_k}}{\partial{m_{1H2O}}})^2u_B^2(m_{1H2O}) +
+(\frac{\partial{c_k}}{\partial{m_{2H2O}}})^2u_B^2(m_{2H2O}) + \\
+(\frac{\partial{c_k}}{\partial{T_{1H2O}}})^2u_B^2(T_{1H2O}) +
+(\frac{\partial{c_k}}{\partial{T_{2H2O}}})^2u_B^2(T_{2H2O}) +
+(\frac{\partial{c_k}}{\partial{T_k}})^2u_B^2(T_k)
+\end{aligned}}$$
+
+Pochodne cząstkowe wyrażają się wzorami:
+
+```{r pochodne2, message=FALSE, warning=FALSE}
+pochodne <- simplify2array(list(c("$\\frac{\\partial{c_k}}{\\partial{c_{wH_2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{m_{1H2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{m_{2H2O}}}$", 
+                                  "$\\frac{\\partial{c_k}}{\\partial{T_{1H2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{T_{2H2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{T_k}}$"),
+                                c("$\\frac{1}{m_k}(m_{2H_2O}\\frac{T_{2H_2O} - T_k}{T_k - T_{1H_2O}} - m_{1H_2O})$",
+                                  "$-\\frac{c_{wH_2O}}{m_k}$",
+                                  "$\\frac{c_{wH_2O}(T_{2H_2O}-T_k)}{m_k(T_k - T_{1H_2O})}$",
+                                  "$\\frac{c_{wH_2O}m_{2H_2O}(T_{2H_2O}-T_k)}{m_k(T_k - T_{1H_2O})^2}$",
+                                  "$\\frac{c_{wH_2O}m_{2H_2O}}{m_k(T_k - T_{1H_2O})}$",
+                                  "$-\\frac{c_{wH_2O}m_{2H_2O}(T_{2H_2O}-T_{1H_2O})}{m_k(T_k - T_{1H_2O})^2}$")))
+
+kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, align = 'c', booktabs = T,
+  linesep = "\\addlinespace\\addlinespace") %>%
+   kable_styling(position="center", latex_options = c("HOLD_position")) 
+
+
+```
+
+Za niepewność miary masy początkowej wody przyjęto $\frac{0,05}{\sqrt{3}}kg$, a wody dolewanej $\frac{0,1}{\sqrt{3}}kg$ Za niepewność temperatury wody początkowej i końcowej przyjęto $\frac{0,0001}{\sqrt{3}}\degree C$, a temperatury wody dolewanej $\frac{1}{\sqrt{3}}\degree C$.
+
+```{r niepewnosci2, echo = FALSE}
+aniep <- 1 / sqrt(3)
+masapoczniep <- 0.05 / sqrt(3)
+masadolniep <- 0.1 / sqrt(3)
+tempnieppocz <- 0.0001 / sqrt(3)
+tempniepdol <- 1 / sqrt(3)
+
+niepewnosci <- sqrt(aniep^2 * ad(a, b, c, d, e, f, g)^2 + 
+                    masadolniep^2 * cd(a, b, c, d, e, f, g)^2 + 
+                    tempniepdol^2 * dd(a, b, c, d, e, f, g)^2 + 
+                    tempnieppocz^2 * ed(a, b, c, d, e, f, g)^2 + 
+                    tempnieppocz^2 * fd(a, b, c, d, e, f, g)^2 + 
+                    masapoczniep^2 * gd(a, b, c, d, e, f, g)^2)
+tab_niepew <- cbind(pom_tab, niepewnosci)
+tab_niepew
+
+kable(tab_niepew, caption="Seria 1 z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O}$", "$T_{1H_2O}$", "$m_{2H_2O}$", "$T_{2H_2O}$", "$T_{k}$", "$c_{wk}$", "$u(c_{wk})$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+```
+
+
+
 
 # Zadanie 3
 
