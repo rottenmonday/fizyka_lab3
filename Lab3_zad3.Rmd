@@ -209,9 +209,9 @@ pochodne <- simplify2array(list(c("$\\frac{\\partial{q_l}}{\\partial{c_{wH2O}}}$
                                 c("$\\frac{m_{1H2O}(T_{1H2O}-T_k)}{m_l}-T_k$",
                                   "$\\frac{c_{wH2O}(T_{1H2O}-T_k)}{m_l}$",
                                   "$\\frac{m_k(T_{1H2O}-T_k)}{m_l}$",
-                                  "$\\frac{(m_{1H2O}c_{wH2O} + m_kc_{wk})(T_{1H2O}-T_k)}{m_l^2}$",
-                                  "$\\frac{(-T_k)(m_{1H2O}c_{wH2O}+m_kc_{wk})}{m_l}-c_{wH2O}$",
-                                  "$\\frac{T_{1H2O}(m_{1H2O}c_{wH2O}+m_kc_{wk})}{m_l}$")))
+                                  "$-\\frac{(m_{1H2O}c_{wH2O} + m_kc_{wk})(T_{1H2O}-T_k)}{m_l^2}$",
+                                  "$\\frac{-(m_{1H2O}c_{wH2O}+m_kc_{wk})}{m_l}-c_{wH2O}$",
+                                  "$\\frac{m_{1H2O}c_{wH2O}+m_kc_{wk}}{m_l}$")))
 
 kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, align = 'c', booktabs = T,
   linesep = "\\addlinespace\\addlinespace") %>%
@@ -248,7 +248,7 @@ Przedstawmy teraz wyliczone wartości ciepła topnienia lodu wraz z ich niepewno
 
 ```{r wyniki_niepewnosci, message=FALSE, warning=FALSE}
 niepewnosc_cwh2o <- 1
-niepewnosc_m1h2o <- 0.05/sqrt(3)
+niepewnosc_m1h2o <- 0.0001/sqrt(3)
 niepewnosc_cwk <- 1
 niepewnosc_ml <- 0.0001/sqrt(3)
 niepewnosc_tk <- 0.0001/sqrt(3)
