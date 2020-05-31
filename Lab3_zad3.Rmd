@@ -1,6 +1,7 @@
 ---
-title: "Lab3_zad3"
-author: "Aleksander Wiśniewski"
+title: "Fizyka 2"
+subtitle: "Laboratorium 3 - Ciepło właściwe"
+author: "Krzysztof Woźniak, Krzysztof Łopatowski, Aleksander Wiśniewski"
 date: "28 05 2020"
 header-includes:
    - \usepackage{amsmath}
@@ -209,6 +210,7 @@ niepew <- min(tab_niepew[, 7])
 
 
 
+\newpage
 
 
 
@@ -217,23 +219,26 @@ niepew <- min(tab_niepew[, 7])
 
 
 
+# Wyznaczanie ciepła topnienia lodu
 
-# Zadanie 3
-
-## Wzór
+## Cel
 
 W zadaniu trzecim będziemy chcieli wyznaczyć ciepło topnienia lodu, korzystając z kalorymetru napełnionego wodą, do którego dodajemy kostki lodu.
 
-W pierwszej kolejności wyznaczymy wzór na ciepło topnienia lodu. Bilans energetyczny takiego układu wygląda tak:
+## Opis eksperymentu
+
+Do kalorymetru o znanej masie i cieple właściwym wlewamy pewną początkową ilość wody $m_{1H_2O}$. Czekamy na ustalenie się równowagi termodynamicznej i mierzymy temperaturę układu. Następnie do układu dodajemy kostkę lodu o znanej masie i ponownie czekamy na ustalenie się równowagi termodynamicznej. 
+
+Bilans energetyczny takiego układu wygląda tak:
 
 $$ q_lm_l+m_lc_{w H2O}T_k = m_{1H2O}c_{wH2O}(T_{1H2O}-T_k) + m_kc_{wk}(T_{1H2O}-T_k)$$
-Gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH2O}$ to ciepło właściwe wody wyliczone w 1 zadaniu, $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w 2 zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, $m_k$ to masa kalorymetru.
+Gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH2O}$ to ciepło właściwe wody (bierzemy ciepło właściwe tablicowe, ponieważ to wyliczone w zadaniu 1 ma zbyt odbiegające wartości), $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w 2 zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, $m_k$ to masa kalorymetru.
 
 Chcemy z tego wzoru wyznaczyć wzór na ciepło topnienia lodu. Po prostych przekształceniach równania otrzymamy:
 
 $$ q_l = \frac{(m_{1H2O}c_{wH2O} + m_kc_{wk})(T_{1H2O}-T_k)}{m_l} - c_{wH2O}T_k$$
 
-## Wyniki
+## Dane eksperymentalne
 
 Korzystając z pomiarów zapisanych przy wykonywaniu wirtualnego laboratorium, wypiszemy teraz dane oraz otrzymaną wartość ciepła topnienia lodu dla kolejnych pomiarów.
 
@@ -243,15 +248,38 @@ pomiary_mod <- pomiary[2:nrow(pomiary),2]
 pomiary_mod <- cbind(pomiary_mod, pomiary[1:20,1])
 pomiary_mod <- cbind(pomiary_mod, pomiary[1:20,2])
 pomiary_mod <- pomiary_mod[,c(3,1,2)]
+pomiary_wozniak <- (as.data.frame(read_excel("pomiary_wozniak.xlsx", "zad3")))[,c("m1w", "tp")]
+pomiary_mod_wozniak <- pomiary_wozniak[2:nrow(pomiary_wozniak),2]
+pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, pomiary_wozniak[1:20,1])
+pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, pomiary_wozniak[1:20,2])
+pomiary_mod_wozniak <- pomiary_mod_wozniak[,c(3,1,2)]
+pomiary_lopatowski <- (as.data.frame(read_excel("pomiary_lopatowski.xlsx")))
+pomiary_mod_lopatowski <- pomiary_lopatowski[2:nrow(pomiary_lopatowski),2]
+pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, pomiary_lopatowski[1:20,1])
+pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, pomiary_lopatowski[1:20,2])
+pomiary_mod_lopatowski <- pomiary_mod_lopatowski[,c(3,1,2)]
+
 m_lodu <- 0.0243
 m_kalor <- 0.765
-cw_h2o <- 4200
-cw_kalor <- 901.1668
+cw_h2o <- 4182
+cw_kalor <- 899.64
 
 wyniki <- ((pomiary_mod[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod[,1]-pomiary_mod[,2])/m_lodu)-(cw_h2o*pomiary_mod[,2])
 pomiary_mod <- cbind(pomiary_mod, wyniki)
 
-kable(pomiary_mod, caption="Pomiary i wartości ciepła topnienia", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg*K]$")) %>%
+wyniki_wozniak <- ((pomiary_mod_wozniak[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod_wozniak[,1]-pomiary_mod_wozniak[,2])/m_lodu)-(cw_h2o*pomiary_mod_wozniak[,2])
+pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, wyniki_wozniak)
+
+wyniki_lopatowski <- ((pomiary_mod_lopatowski[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod_lopatowski[,1]-pomiary_mod_lopatowski[,2])/m_lodu)-(cw_h2o*pomiary_mod_lopatowski[,2])
+pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, wyniki_lopatowski)
+
+kable(pomiary_mod, caption="Pomiary i wartości ciepła topnienia Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+kable(pomiary_mod_wozniak, caption="Pomiary i wartości ciepła topnienia Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+kable(pomiary_mod_lopatowski, caption="Pomiary i wartości ciepła topnienia Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
 
@@ -269,7 +297,7 @@ kable(stale, caption="Wartości stałych", format = "latex", escape = FALSE, ali
 
 ## Analiza niepewności pomiarowych
 
-Otrzymane wartości ciepła topnienia lodu każdorazowo obarczone są pewną niepewnością obliczeniową typu B, która wynika z niedokładności urządzeń pomiarowych oraz niepewności wartości ciepła właściwego wody oraz kalorymetru, wyliczonych w poprzednich poleceniach. 
+Otrzymane wartości ciepła topnienia lodu każdorazowo obarczone są pewną niepewnością obliczeniową typu B, która wynika z niedokładności urządzeń pomiarowych oraz niepewności wartości ciepła właściwego kalorymetru, wyliczonego w poprzednim zadaniu.
 
 Niepewność typu B wartości ciepła topnienia lodu obliczymy metodą propagacji niepewności:
 
@@ -303,7 +331,7 @@ kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, al
 
 ```
 
-Natomiast ich wartości dla poszczególnych pomiarów są takie:
+<!-- Natomiast ich wartości dla poszczególnych pomiarów są takie: -->
 
 ```{r pochodnewart, message=FALSE, warning=FALSE}
 warts <- 1:20
@@ -314,58 +342,106 @@ warts <- cbind(warts, mld(m1h2o = pomiary_mod[,3], cwh2o = cw_h2o, mk = m_kalor,
 warts <- cbind(warts, tkd(m1h2o = pomiary_mod[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod[,1], tk = pomiary_mod[,2], ml = m_lodu))
 warts <- cbind(warts, t1h2od(m1h2o = pomiary_mod[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod[,1], tk = pomiary_mod[,2], ml = m_lodu))
 
+warts_wozniak <- 1:20
+warts_wozniak <- cbind(warts_wozniak, cwh2od(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
+warts_wozniak <- cbind(warts_wozniak, m1h2od(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
+warts_wozniak <- cbind(warts_wozniak, cwkd(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
+warts_wozniak <- cbind(warts_wozniak, mld(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
+warts_wozniak <- cbind(warts_wozniak, tkd(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
+warts_wozniak <- cbind(warts_wozniak, t1h2od(m1h2o = pomiary_mod_wozniak[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_wozniak[,1], tk = pomiary_mod_wozniak[,2], ml = m_lodu))
 
-kable(warts, caption="Wartości pochodnych", format = "latex", escape = FALSE, align = 'c', 
-      col.names = c("Pomiar",
-                    "$\\frac{\\partial{q_l}}{\\partial{c_{wH2O}}}$",
-                    "$\\frac{\\partial{q_l}}{\\partial{m_{1H2O}}}$",
-                    "$\\frac{\\partial{q_l}}{\\partial{c_{wk}}}$", 
-                    "$\\frac{\\partial{q_l}}{\\partial{m_l}}$",
-                    "$\\frac{\\partial{q_l}}{\\partial{T_k}}$",
-                    "$\\frac{\\partial{q_l}}{\\partial{T_{1H2O}}}$")) %>%
-   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+warts_lopatowski <- 1:20
+warts_lopatowski <- cbind(warts_lopatowski, cwh2od(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+warts_lopatowski <- cbind(warts_lopatowski, m1h2od(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+warts_lopatowski <- cbind(warts_lopatowski, cwkd(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+warts_lopatowski <- cbind(warts_lopatowski, mld(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+warts_lopatowski <- cbind(warts_lopatowski, tkd(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+warts_lopatowski <- cbind(warts_lopatowski, t1h2od(m1h2o = pomiary_mod_lopatowski[,3], cwh2o = cw_h2o, mk = m_kalor, cwk = cw_kalor, t1h2o = pomiary_mod_lopatowski[,1], tk = pomiary_mod_lopatowski[,2], ml = m_lodu))
+
+
+# kable(warts, caption="Wartości pochodnych", format = "latex", escape = FALSE, align = 'c', 
+#       col.names = c("Pomiar",
+#                     "$\\frac{\\partial{q_l}}{\\partial{c_{wH2O}}}$",
+#                     "$\\frac{\\partial{q_l}}{\\partial{m_{1H2O}}}$",
+#                     "$\\frac{\\partial{q_l}}{\\partial{c_{wk}}}$", 
+#                     "$\\frac{\\partial{q_l}}{\\partial{m_l}}$",
+#                     "$\\frac{\\partial{q_l}}{\\partial{T_k}}$",
+#                     "$\\frac{\\partial{q_l}}{\\partial{T_{1H2O}}}$")) %>%
+#    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
 ```
+
+Poszczególne niepewności pomiarowe przyjęliśmy jako: niepewność pomiarowa $u_B(c_{wH_2O}) = 0$ (bierzemy wartość tablicową), niepewność $u_B(m_{1H2O}) = \frac{0.05}{\sqrt{3}}$, $u_B(c_{wk})=517.22$, $u_B(m_l)=\frac{0.0001}{\sqrt{3}}$, $u_B(T_k)=\frac{0.0001}{\sqrt{3}}$, $u(T_{1H_2O})=\frac{0.0001}{\sqrt{3}}$.
 
 Przedstawmy teraz wyliczone wartości ciepła topnienia lodu wraz z ich niepewnościami.
 
 ```{r wyniki_niepewnosci, message=FALSE, warning=FALSE}
-niepewnosc_cwh2o <- 1
-niepewnosc_m1h2o <- 0.0001/sqrt(3)
-niepewnosc_cwk <- 1
+niepewnosc_cwh2o <- 0
+niepewnosc_m1h2o <- 0.05/sqrt(3)
+niepewnosc_cwk <- 517.22
 niepewnosc_ml <- 0.0001/sqrt(3)
 niepewnosc_tk <- 0.0001/sqrt(3)
 niepewnosc_t1h2o <- 0.0001/sqrt(3)
 bledy <- sqrt(warts[,2]^2*niepewnosc_cwh2o^2 + warts[,3]^2*niepewnosc_m1h2o^2 + warts[,4]^2*niepewnosc_cwk^2 + warts[,5]^2*niepewnosc_ml^2 + warts[,6]^2*niepewnosc_tk^2 + warts[,7]^2*niepewnosc_t1h2o^2)
 
-pomiary_mod <- cbind(pomiary_mod, bledy)
+bledy_wozniak <- sqrt(warts_wozniak[,2]^2*niepewnosc_cwh2o^2 + warts_wozniak[,3]^2*niepewnosc_m1h2o^2 + warts_wozniak[,4]^2*niepewnosc_cwk^2 + warts_wozniak[,5]^2*niepewnosc_ml^2 + warts_wozniak[,6]^2*niepewnosc_tk^2 + warts_wozniak[,7]^2*niepewnosc_t1h2o^2)
 
-kable(pomiary_mod, caption="Wartości ciepła topnienia i niepewności", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg*K]$", "$u_B(c_t)[J/kg*K]$")) %>%
+bledy_lopatowski <- sqrt(warts_lopatowski[,2]^2*niepewnosc_cwh2o^2 + warts_lopatowski[,3]^2*niepewnosc_m1h2o^2 + warts_lopatowski[,4]^2*niepewnosc_cwk^2 + warts_lopatowski[,5]^2*niepewnosc_ml^2 + warts_lopatowski[,6]^2*niepewnosc_tk^2 + warts_lopatowski[,7]^2*niepewnosc_t1h2o^2)
+
+pomiary_mod <- cbind(pomiary_mod, bledy)
+pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, bledy_wozniak)
+pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, bledy_lopatowski)
+
+kable(pomiary_mod, caption="Wartości ciepła topnienia i niepewności Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+kable(pomiary_mod_wozniak, caption="Wartości ciepła topnienia i niepewności Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+kable(pomiary_mod_lopatowski, caption="Wartości ciepła topnienia i niepewności Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 ```
+
+## Wykresy
 
 Prześledźmy jeszcze zależność wartości wyliczonego ciepła topnienia lodu od masy początkowej wody w kalorymetrze, wraz zaznaczonymi niepewnościami:
 
 ```{r zaleznosc_cw_od_m1, message=FALSE, warning=FALSE}
 
 wyniki <- as.data.frame(pomiary_mod)
-p <- ggplot(wyniki, aes(x=V3, y=wyniki)) + geom_point() + geom_line() +
-#   geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
-   labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg*K]") +
-   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy początkowej wody")
+wyniki_wozniak <- as.data.frame(pomiary_mod_wozniak)
+wyniki_lopatowski <- as.data.frame(pomiary_mod_lopatowski)
+colnames(wyniki_wozniak) <- colnames(wyniki)
+colnames(wyniki_lopatowski) <- colnames(wyniki)
+wyniki <- rbind(wyniki, wyniki_wozniak)
+wyniki <- rbind(wyniki, wyniki_lopatowski)
+p <- ggplot(as.data.frame(pomiary_mod), aes(x=V3, y=wyniki)) + geom_point() +
+   geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
+   labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
+   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 1")
+p
+p <- ggplot(wyniki_wozniak, aes(x=V3, y=wyniki)) + geom_point() +
+   geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
+   labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
+   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 2")
+p
+p <- ggplot(wyniki_lopatowski, aes(x=V3, y=wyniki)) + geom_point() +
+   geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
+   labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
+   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 3")
 p
 
-#plot(x = pomiary_mod[,3], y = pomiary_mod[,4], type="p", xlab = "Masa początkowa wody", ylab="Ciepło topnienia lodu")
-#lines(x = pomiary_mod[,3], y = pomiary_mod[,4])
 ```
 
-## Wynik
+## Wynik i analiza
 
 ```{r wartosci, message=FALSE, warning=FALSE}
-srednia <- mean(pomiary_mod[,4])
-err <- max(pomiary_mod[,5])
+srednia <- mean(wyniki[,4])
+err <- max(wyniki[,5])
 
 ```
 
-Jako wynik naszych obliczeń weźmiemy średnią arytmetyczną wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. W takim razie wyliczona przez nas wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg*K].
+Jako wynik naszych obliczeń weźmiemy średnią arytmetyczną wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. W takim razie wyliczona przez nas wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg].
 
+Większość wartości niepewności wynika z niepewności pomiaru ciepła właściwego kalorymetru, która to niepewność z kolei wynika z dużej niedokładności podziałki w wirtualnym laboratorium. 
+
+Wartości wyliczonego ciepła topnienia lodu w zasadzie nie zależą od masy początkowej wody. Jedyne co udaje nam się przez zwiększenie masy początkowej wody to zwiększenie precyzji obliczeń - niepewności maleją.
