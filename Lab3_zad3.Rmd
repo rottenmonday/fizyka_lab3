@@ -91,9 +91,9 @@ Wszystkie pomiary obarczone są niepewnością pomiarową typu B. Aby wyznaczyć
 
 $$u_B(c_k)=\sqrt{
 \begin{aligned}
-(\frac{\partial{c_k}}{\partial{c_{wH2O}}})^2u_B^2(c_{wH2O}) + (\frac{\partial{c_k}}{\partial{m_{1H2O}}})^2u_B^2(m_{1H2O}) +
-(\frac{\partial{c_k}}{\partial{m_{2H2O}}})^2u_B^2(m_{2H2O}) + \\
-(\frac{\partial{c_k}}{\partial{T_{1H2O}}})^2u_B^2(T_{1H2O}) +
+(\frac{\partial{c_k}}{\partial{m_{1H2O}}})^2u_B^2(m_{1H2O}) +
+(\frac{\partial{c_k}}{\partial{m_{2H2O}}})^2u_B^2(m_{2H2O}) + 
+(\frac{\partial{c_k}}{\partial{T_{1H2O}}})^2u_B^2(T_{1H2O}) + \\
 (\frac{\partial{c_k}}{\partial{T_{2H2O}}})^2u_B^2(T_{2H2O}) +
 (\frac{\partial{c_k}}{\partial{T_k}})^2u_B^2(T_k)
 \end{aligned}}$$
@@ -101,14 +101,12 @@ $$u_B(c_k)=\sqrt{
 Pochodne cząstkowe wyrażają się wzorami:
 
 ```{r pochodne2, message=FALSE, warning=FALSE}
-pochodne <- simplify2array(list(c("$\\frac{\\partial{c_k}}{\\partial{c_{wH_2O}}}$",
-                                  "$\\frac{\\partial{c_k}}{\\partial{m_{1H2O}}}$",
+pochodne <- simplify2array(list(c("$\\frac{\\partial{c_k}}{\\partial{m_{1H2O}}}$",
                                   "$\\frac{\\partial{c_k}}{\\partial{m_{2H2O}}}$", 
                                   "$\\frac{\\partial{c_k}}{\\partial{T_{1H2O}}}$",
                                   "$\\frac{\\partial{c_k}}{\\partial{T_{2H2O}}}$",
                                   "$\\frac{\\partial{c_k}}{\\partial{T_k}}$"),
-                                c("$\\frac{1}{m_k}(m_{2H_2O}\\frac{T_{2H_2O} - T_k}{T_k - T_{1H_2O}} - m_{1H_2O})$",
-                                  "$-\\frac{c_{wH_2O}}{m_k}$",
+                                c("$-\\frac{c_{wH_2O}}{m_k}$",
                                   "$\\frac{c_{wH_2O}(T_{2H_2O}-T_k)}{m_k(T_k - T_{1H_2O})}$",
                                   "$\\frac{c_{wH_2O}m_{2H_2O}(T_{2H_2O}-T_k)}{m_k(T_k - T_{1H_2O})^2}$",
                                   "$\\frac{c_{wH_2O}m_{2H_2O}}{m_k(T_k - T_{1H_2O})}$",
@@ -130,8 +128,7 @@ masadolniep <- 0.1 / sqrt(3)
 tempnieppocz <- 0.0001 / sqrt(3)
 tempniepdol <- 1 / sqrt(3)
 
-niepewnosci <- sqrt(aniep^2 * ad(a, b, c, d, e, f, g)^2 + 
-                    masadolniep^2 * cd(a, b, c, d, e, f, g)^2 + 
+niepewnosci <- sqrt(masadolniep^2 * cd(a, b, c, d, e, f, g)^2 + 
                     tempniepdol^2 * dd(a, b, c, d, e, f, g)^2 + 
                     tempnieppocz^2 * ed(a, b, c, d, e, f, g)^2 + 
                     tempnieppocz^2 * fd(a, b, c, d, e, f, g)^2 + 
@@ -331,8 +328,8 @@ Przedstawmy teraz wyliczone wartości ciepła topnienia lodu wraz z ich niepewno
 
 ```{r wyniki_niepewnosci, message=FALSE, warning=FALSE}
 niepewnosc_cwh2o <- 1
-niepewnosc_m1h2o <- 0.0001/sqrt(3)
-niepewnosc_cwk <- 1
+niepewnosc_m1h2o <- 0.05/sqrt(3)
+niepewnosc_cwk <- 500
 niepewnosc_ml <- 0.0001/sqrt(3)
 niepewnosc_tk <- 0.0001/sqrt(3)
 niepewnosc_t1h2o <- 0.0001/sqrt(3)
