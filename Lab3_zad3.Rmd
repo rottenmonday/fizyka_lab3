@@ -41,7 +41,7 @@ Celem drugiego zadania jest wyznaczenie ciepła właściwego kalorymetru.
 W chwili początkowej kalorymetr o masie $`r b`$ wypełniony jest wodą o masie $`r g`$. Wewnątrz kalorymetru panuje stan równowagi termodynamicznej, czyli temperatura kalorymetru jest równa temperaturze wody i wynosi $`r e`$. Dolanie do kalorymetru wody o masie $`r c`$ i temperaturze $`r d`$ > $`r e`$ spowoduje oddanie części energii dolanej wody do kalorymetru i wody wcześniej się w nim znajdującej, ponieważ temperatura dolewanej wody jest większa niż temperatura układu. Po pewnym czasie układ osiągnie stan równowagi termodynamicznej, czyli temperatura wymieszanej wody oraz kalorymetru będzie taka sama i równa $`r f`$. Bilans energetyczny opisujący takie zdarzenie jest następujący:
 
 $$`r c` `r a`(`r d` - `r f`) = `r g``r a`(`r f` - `r e`) + `r b`c_{wk}(`r f` - `r e`)$$
-Lewa strona równania opisuje energię oddaną przez dolaną wodę, natomiast prawa strona energię otrzymaną przez kalorymetr oraz wodę, która się w nim znajdowała. Po przeniesieniu pierwszego składnika prawej strony na drugą oraz podzieleniu równania przez $`r b`(`r f` - `r e`)$ otrzymano wzór na ciepło właściwe kalorymetru:
+Lewa strona równania opisuje energię oddaną przez dolaną wodę, natomiast prawa strona energię otrzymaną przez kalorymetr oraz wodę, która się w nim znajdowała. Po przeniesieniu pierwszego składnika prawej strony na lewą oraz podzieleniu równania przez $`r b`(`r f` - `r e`)$ otrzymano wzór na ciepło właściwe kalorymetru:
 
 $$c_k = \frac{`r a`}{`r b`}(`r c`\frac{`r d` - `r f`}{`r f` - `r e`} - `r g`)$$
 
@@ -50,10 +50,11 @@ $$c_k = \frac{`r a`}{`r b`}(`r c`\frac{`r d` - `r f`}{`r f` - `r e`} - `r g`)$$
 ```{r, echo = FALSE}
 pomiary <- as.data.frame(read_excel(path = "pomiary_wozniak.xlsx", sheet = 'zad2'))
 pomiaryalek <- as.data.frame(read_excel(path = "kalorymetr_Alek.xlsx"))[, 3:7]
+pomiarylopat <- as.data.frame(read_excel(path = "kalorymetr_lopatowski.xlsx"))[, 3:7]
 cww <- 4183
 mk <- 0.765
 
-pom_tab <- rbind(pomiary[, c(-1, -2, -8)], pomiaryalek)
+pom_tab <- rbind(pomiary[, c(-1, -2, -8)], pomiaryalek, pomiarylopat)
 
 
 cwk <- cww/mk * (pom_tab[, 3] * 
@@ -71,16 +72,22 @@ pom_tab <- cbind(pom_tab, cwk)
 kable(pom_tab[1:5, ], caption="Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
+pom2 <- pom_tab[6:10, ]
+rownames(pom2) <- NULL
+kable(pom2, caption="Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
-kable(pom_tab[6:10, ], caption="Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $")) %>%
+pom3 <- pom_tab[11:15, ]
+rownames(pom3) <- NULL
+kable(pom3, caption="Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 ```
 
-Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatnie kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody przyjęto wartość obliczoną z ćwiczenia pierwszego równą ... (teraz 4183).
+Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatniej kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody przyjęto 4183 $\frac{J}{kg \cdot K}$.
 
 ## Analiza niepewności pomiarowych
 
-Wszystkie pomiary obarczone są niepewnością pomiarową typu B. Aby wyznaczyć niepewność wyznaczonego ciepła właściwego kalorymetru skorzystamy z prawa propagacji niepewności pomiarowej:
+Wszystkie pomiary obarczone są niepewnością pomiarową typu B. Aby wyznaczyć niepewność wyznaczonego ciepła właściwego kalorymetru skorzystano z prawa propagacji niepewności pomiarowej:
 
 $$u_B(c_k)=\sqrt{
 \begin{aligned}
@@ -114,7 +121,7 @@ kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, al
 
 ```
 
-Za niepewność miary masy początkowej wody przyjęto $\frac{0,05}{\sqrt{3}}kg$, a wody dolewanej $\frac{0,1}{\sqrt{3}}kg$. Za niepewność temperatury wody początkowej i końcowej przyjęto $\frac{0,0001}{\sqrt{3}}\degree C$, a temperatury wody dolewanej $\frac{1}{\sqrt{3}}\degree C$.
+Za niepewność miary masy początkowej wody przyjęto $\frac{0,05}{\sqrt{3}}kg$, a wody dolewanej $\frac{0,1}{\sqrt{3}}kg$. Za niepewność początkowej i końcowej temperatury wody przyjęto $\frac{0,0001}{\sqrt{3}}\degree C$, a temperatury wody dolewanej $\frac{1}{\sqrt{3}}\degree C$.
 
 ```{r niepewnosci2, echo = FALSE}
 aniep <- 1 / sqrt(3)
@@ -135,7 +142,14 @@ tab_niepew <- cbind(pom_tab, niepewnosci)
 kable(tab_niepew[1:5, ], caption="Seria 1 z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $", "$u_B(c_{wk}) [\\frac{J}{kg \\cdot K}]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
-kable(tab_niepew[6:10, ], caption="Seria 2 z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $", "$u_B(c_{wk}) [\\frac{J}{kg \\cdot K}]$")) %>%
+pom2 <- tab_niepew[6:10, ]
+rownames(pom2) <- NULL
+kable(pom2, caption="Seria 2 z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $", "$u_B(c_{wk}) [\\frac{J}{kg \\cdot K}]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+pom3 <- tab_niepew[11:15, ]
+rownames(pom3) <- NULL
+kable(pom3, caption="Seria 3 z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m_{1H_2O} [kg]$", "$T_{1H_2O} [\\degree C]$", "$m_{2H_2O} [kg]$", "$T_{2H_2O} [\\degree C]$", "$T_{k} [\\degree C]$", "$c_{wk}[\\frac{J}{kg \\cdot K}] $", "$u_B(c_{wk}) [\\frac{J}{kg \\cdot K}]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
 ```
@@ -152,7 +166,7 @@ ggplot(df[1:5, ], aes(x=x, y=y)) + geom_point() +
    geom_errorbar(aes(ymin = y - yd, ymax = y + yd), size = 0.5, width = 0.05) +
    geom_errorbar(aes(xmin = x - xd, xmax = x + xd), size = 0.5, width = 180) +
    labs(x = "Masa początkowa wody [kg]", y = "Ciepło właściwe kalorymetru J/(kg*K)") +
-   ggtitle("Zależność ciepła właściwego kalorymetru od początkowej masy wody") + 
+   labs(title = "Zależność ciepła właściwego kalorymetru od początkowej masy wody", subtitle = 'Seria 1') + 
    theme(plot.title = element_text(size = 12))
 
 
@@ -160,24 +174,32 @@ ggplot(df[6:10, ], aes(x=x, y=y)) + geom_point() +
    geom_errorbar(aes(ymin = y - yd, ymax = y + yd), size = 0.5, width = 0.05) +
    geom_errorbar(aes(xmin = x - xd, xmax = x + xd), size = 0.5, width = 180) +
    labs(x = "Masa początkowa wody [kg]", y = "Ciepło właściwe kalorymetru J/(kg*K)") +
-   ggtitle("Zależność ciepła właściwego kalorymetru od początkowej masy wody") + 
+   labs(title = "Zależność ciepła właściwego kalorymetru od początkowej masy wody", subtitle = 'Seria 2') + 
+   theme(plot.title = element_text(size = 12))
+
+ggplot(df[11:15, ], aes(x=x, y=y)) + geom_point() +
+   geom_errorbar(aes(ymin = y - yd, ymax = y + yd), size = 0.5, width = 0.05) +
+   geom_errorbar(aes(xmin = x - xd, xmax = x + xd), size = 0.5, width = 180) +
+   labs(x = "Masa początkowa wody [kg]", y = "Ciepło właściwe kalorymetru J/(kg*K)") +
+   labs(title = "Zależność ciepła właściwego kalorymetru od początkowej masy wody", subtitle = 'Seria 3') + 
    theme(plot.title = element_text(size = 12))
 
 
 ```
 
+Punkty przedstawione na wykresie pokazują, że ciepło właściwe kalorymetru praktycznie nie zmienia się w zależności od masy początkowej wody. Taki wynik nie powinien dziwić - ciepło właściwe kalorymetru to wartość stała i nie powinno zależeć od znajdującej się w kalorymetrze wody. Warto zwrócić uwagę na znacząco rosnące niepewności obliczanego ciepła właściwego kalorymetru. Po bliższym zbadaniu można stwierdzić, że znaczna część tej niepewności wynika z niedokładności masy i temperatury wody dolewanej. 
 
 ## Wyniki i analiza
 
 ```{r wyniki2, echo = FALSE}
 
 sr_cwk <- mean(tab_niepew[, 6])
-
+niepew <- min(tab_niepew[, 7])
 
 
 ```
 
-Średnia wartość ciepła właściwego kalorymetru wynosi `r sr_cwk` $\frac{J}{kg \cdot K}$. 
+Średnia wartość ciepła właściwego kalorymetru wynosi `r round(sr_cwk, 2)` $\frac{J}{kg \cdot K}$. Za niepewność średniej wartości ciepła przyjęto najmniejszą niepewność spośród obliczonych. Bardzo duże wartości niepewności wiążą się z relatywnie dużymi wartościami pochodnych oraz z dużymi niepewnościami poszczególnych mierzonych wartości. W największym stopniu dotyczy to niepewności towarzyszących masie i temperaturze wody dolewanej. Kolejne wyliczone wartości ciepła właściwego kalorymetru pozostają jednak bardzo zbliżone, więc można przyjąć najniższą niepewność. Ostateczny wynik z przyjętą niepewnością wynosi więc `r round(sr_cwk, 2)`(`r round(niepew, 2)`) $\frac{J}{kg \cdot K}$.
 
 
 
