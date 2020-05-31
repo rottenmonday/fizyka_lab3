@@ -248,7 +248,7 @@ cw_kalor <- 901.1668
 wyniki <- ((pomiary_mod[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod[,1]-pomiary_mod[,2])/m_lodu)-(cw_h2o*pomiary_mod[,2])
 pomiary_mod <- cbind(pomiary_mod, wyniki)
 
-kable(pomiary_mod, caption="Pomiary i wartości ciepła topnienia", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_p[C]$","$T_k[C]$","$m_{H2O}[kg]$","$c_t[J/kg*K]$")) %>%
+kable(pomiary_mod, caption="Pomiary i wartości ciepła topnienia", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg*K]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
 
@@ -337,8 +337,23 @@ bledy <- sqrt(warts[,2]^2*niepewnosc_cwh2o^2 + warts[,3]^2*niepewnosc_m1h2o^2 + 
 
 pomiary_mod <- cbind(pomiary_mod, bledy)
 
-kable(pomiary_mod, caption="Wartości ciepła topnienia i niepewności", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_p[C]$","$T_k[C]$","$m_{H2O}[kg]$","$c_t[J/kg*K]$", "$u_B(c_t)[J/kg*K]$")) %>%
+kable(pomiary_mod, caption="Wartości ciepła topnienia i niepewności", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg*K]$", "$u_B(c_t)[J/kg*K]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+```
+
+Prześledźmy jeszcze zależność wartości wyliczonego ciepła topnienia lodu od masy początkowej wody w kalorymetrze, wraz zaznaczonymi niepewnościami:
+
+```{r zaleznosc_cw_od_m1, message=FALSE, warning=FALSE}
+
+wyniki <- as.data.frame(pomiary_mod)
+p <- ggplot(wyniki, aes(x=V3, y=wyniki)) + geom_point() + geom_line() +
+#   geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
+   labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg*K]") +
+   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy początkowej wody")
+p
+
+#plot(x = pomiary_mod[,3], y = pomiary_mod[,4], type="p", xlab = "Masa początkowa wody", ylab="Ciepło topnienia lodu")
+#lines(x = pomiary_mod[,3], y = pomiary_mod[,4])
 ```
 
 ## Wynik
