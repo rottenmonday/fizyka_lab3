@@ -84,7 +84,7 @@ kable(pom3, caption="Seria 3", format = "latex", escape = FALSE, align = 'c', co
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 ```
 
-Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatniej kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody przyjęto 4183 $\frac{J}{kg \cdot K}$.
+Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatniej kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody jako, wartość nieobarczoną błędem, przyjęto 4183 $\frac{J}{kg \cdot K}$.
 
 ## Analiza niepewności pomiarowych
 
@@ -92,20 +92,20 @@ Wszystkie pomiary obarczone są niepewnością pomiarową typu B. Aby wyznaczyć
 
 $$u_B(c_k)=\sqrt{
 \begin{aligned}
-(\frac{\partial{c_k}}{\partial{m_{1H2O}}})^2u_B^2(m_{1H2O}) +
-(\frac{\partial{c_k}}{\partial{m_{2H2O}}})^2u_B^2(m_{2H2O}) + 
-(\frac{\partial{c_k}}{\partial{T_{1H2O}}})^2u_B^2(T_{1H2O}) + \\
-(\frac{\partial{c_k}}{\partial{T_{2H2O}}})^2u_B^2(T_{2H2O}) +
+(\frac{\partial{c_k}}{\partial{m_{1H_2O}}})^2u_B^2(m_{1H_2O}) +
+(\frac{\partial{c_k}}{\partial{m_{2H_2O}}})^2u_B^2(m_{2H_2O}) + 
+(\frac{\partial{c_k}}{\partial{T_{1H_2O}}})^2u_B^2(T_{1H_2O}) + \\
+(\frac{\partial{c_k}}{\partial{T_{2H_2O}}})^2u_B^2(T_{2H_2O}) +
 (\frac{\partial{c_k}}{\partial{T_k}})^2u_B^2(T_k)
 \end{aligned}}$$
 
 Pochodne cząstkowe wyrażają się wzorami:
 
 ```{r pochodne2, message=FALSE, warning=FALSE}
-pochodne <- simplify2array(list(c("$\\frac{\\partial{c_k}}{\\partial{m_{1H2O}}}$",
-                                  "$\\frac{\\partial{c_k}}{\\partial{m_{2H2O}}}$", 
-                                  "$\\frac{\\partial{c_k}}{\\partial{T_{1H2O}}}$",
-                                  "$\\frac{\\partial{c_k}}{\\partial{T_{2H2O}}}$",
+pochodne <- simplify2array(list(c("$\\frac{\\partial{c_k}}{\\partial{m_{1H_2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{m_{2H_2O}}}$", 
+                                  "$\\frac{\\partial{c_k}}{\\partial{T_{1H_2O}}}$",
+                                  "$\\frac{\\partial{c_k}}{\\partial{T_{2H_2O}}}$",
                                   "$\\frac{\\partial{c_k}}{\\partial{T_k}}$"),
                                 c("$-\\frac{c_{wH_2O}}{m_k}$",
                                   "$\\frac{c_{wH_2O}(T_{2H_2O}-T_k)}{m_k(T_k - T_{1H_2O})}$",
@@ -120,7 +120,7 @@ kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, al
 
 ```
 
-Za niepewność miary masy początkowej wody przyjęto $\frac{0,05}{\sqrt{3}}kg$, a wody dolewanej $\frac{0,1}{\sqrt{3}}kg$. Za niepewność początkowej i końcowej temperatury wody przyjęto $\frac{0,0001}{\sqrt{3}}\degree C$, a temperatury wody dolewanej $\frac{1}{\sqrt{3}}\degree C$.
+Za niepewność miary masy początkowej wody przyjęto $\frac{0,05}{\sqrt{3}}kg$, a wody dolewanej $\frac{0,1}{\sqrt{3}}kg$. Za niepewność początkowej i końcowej temperatury wody przyjęto $\frac{0,0001}{\sqrt{3}}\degree C$, a temperatury wody dolewanej $\frac{1}{\sqrt{3}}\degree C$. 
 
 ```{r niepewnosci2, echo = FALSE}
 aniep <- 1 / sqrt(3)
@@ -228,12 +228,12 @@ Do kalorymetru o znanej masie i cieple właściwym wlewamy pewną początkową i
 
 Bilans energetyczny takiego układu wygląda tak:
 
-$$ q_lm_l+m_lc_{w H2O}T_k = m_{1H2O}c_{wH2O}(T_{1H2O}-T_k) + m_kc_{wk}(T_{1H2O}-T_k)$$
-Gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH2O}$ to ciepło właściwe wody (bierzemy ciepło właściwe tablicowe, ponieważ to wyliczone w zadaniu 1 ma zbyt odbiegające wartości), $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w 2 zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, $m_k$ to masa kalorymetru.
+$$ q_lm_l+m_lc_{w H_2O}T_k = m_{1H_2O}c_{wH_2O}(T_{1H_2O}-T_k) + m_kc_{wk}(T_{1H_2O}-T_k)$$
+Gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH_2O}$ to ciepło właściwe wody (bierzemy ciepło właściwe tablicowe, ponieważ to wyliczone w zadaniu 1 ma zbyt odbiegające wartości), $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w 2 zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H_2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H_2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, $m_k$ to masa kalorymetru.
 
 Chcemy z tego wzoru wyznaczyć wzór na ciepło topnienia lodu. Po prostych przekształceniach równania otrzymamy:
 
-$$ q_l = \frac{(m_{1H2O}c_{wH2O} + m_kc_{wk})(T_{1H2O}-T_k)}{m_l} - c_{wH2O}T_k$$
+$$ q_l = \frac{(m_{1H_2O}c_{wH_2O} + m_kc_{wk})(T_{1H_2O}-T_k)}{m_l} - c_{wH_2O}T_k$$
 
 ## Dane eksperymentalne
 
@@ -258,7 +258,7 @@ pomiary_mod_lopatowski <- pomiary_mod_lopatowski[,c(3,1,2)]
 
 m_lodu <- 0.0243
 m_kalor <- 0.765
-cw_h2o <- 4182
+cw_h2o <- 4183
 cw_kalor <- 899.64
 
 wyniki <- ((pomiary_mod[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod[,1]-pomiary_mod[,2])/m_lodu)-(cw_h2o*pomiary_mod[,2])
@@ -301,25 +301,25 @@ Niepewność typu B wartości ciepła topnienia lodu obliczymy metodą propagacj
 
 $$u_B(q_l)=\sqrt{
 \begin{aligned}
-(\frac{\partial{q_l}}{\partial{c_{wH2O}}})^2u_B^2(c_{wH2O}) + (\frac{\partial{q_l}}{\partial{m_{1H2O}}})^2u_B^2(m_{1H2O})+(\frac{\partial{q_l}}{\partial{c_{wk}}})^2u_B^2(c_{wk})+(\frac{\partial{q_l}}{\partial{m_l}})^2u_B^2(m_l)+ \\
-(\frac{\partial{q_l}}{\partial{T_k}})^2u_B^2(T_k)+(\frac{\partial{q_l}}{\partial{T_{1H2O}}})^2u_B^2(T_{1H2O})
+ (\frac{\partial{q_l}}{\partial{m_{1H_2O}}})^2u_B^2(m_{1H_2O})+(\frac{\partial{q_l}}{\partial{c_{wk}}})^2u_B^2(c_{wk})+(\frac{\partial{q_l}}{\partial{m_l}})^2u_B^2(m_l)+ \\
+(\frac{\partial{q_l}}{\partial{T_k}})^2u_B^2(T_k)+(\frac{\partial{q_l}}{\partial{T_{1H_2O}}})^2u_B^2(T_{1H_2O})
 \end{aligned}}$$
 
 Poszczególne pochodne cząstkowe wyrażają się wzorami:
 
 ```{r pochodne, message=FALSE, warning=FALSE}
-pochodne <- simplify2array(list(c("$\\frac{\\partial{q_l}}{\\partial{c_{wH2O}}}$",
-                                  "$\\frac{\\partial{q_l}}{\\partial{m_{1H2O}}}$",
+pochodne <- simplify2array(list(c(
+                                  "$\\frac{\\partial{q_l}}{\\partial{m_{1H_2O}}}$",
                                   "$\\frac{\\partial{q_l}}{\\partial{c_{wk}}}$", 
                                   "$\\frac{\\partial{q_l}}{\\partial{m_l}}$",
                                   "$\\frac{\\partial{q_l}}{\\partial{T_k}}$",
-                                  "$\\frac{\\partial{q_l}}{\\partial{T_{1H2O}}}$"),
-                                c("$\\frac{m_{1H2O}(T_{1H2O}-T_k)}{m_l}-T_k$",
-                                  "$\\frac{c_{wH2O}(T_{1H2O}-T_k)}{m_l}$",
-                                  "$\\frac{m_k(T_{1H2O}-T_k)}{m_l}$",
-                                  "$-\\frac{(m_{1H2O}c_{wH2O} + m_kc_{wk})(T_{1H2O}-T_k)}{m_l^2}$",
-                                  "$\\frac{-(m_{1H2O}c_{wH2O}+m_kc_{wk})}{m_l}-c_{wH2O}$",
-                                  "$\\frac{m_{1H2O}c_{wH2O}+m_kc_{wk}}{m_l}$")))
+                                  "$\\frac{\\partial{q_l}}{\\partial{T_{1H_2O}}}$"),
+                                c(
+                                  "$\\frac{c_{wH_2O}(T_{1H_2O}-T_k)}{m_l}$",
+                                  "$\\frac{m_k(T_{1H_2O}-T_k)}{m_l}$",
+                                  "$-\\frac{(m_{1H_2O}c_{wH_2O} + m_kc_{wk})(T_{1H_2O}-T_k)}{m_l^2}$",
+                                  "$\\frac{-(m_{1H_2O}c_{wH_2O}+m_kc_{wk})}{m_l}-c_{wH_2O}$",
+                                  "$\\frac{m_{1H_2O}c_{wH_2O}+m_kc_{wk}}{m_l}$")))
 
 kable(pochodne, caption="Wzory pochodnych", format = "latex", escape = FALSE, align = 'c', booktabs = T,
   linesep = "\\addlinespace\\addlinespace") %>%
@@ -358,7 +358,7 @@ warts_lopatowski <- cbind(warts_lopatowski, t1h2od(m1h2o = pomiary_mod_lopatowsk
 
 # kable(warts, caption="Wartości pochodnych", format = "latex", escape = FALSE, align = 'c', 
 #       col.names = c("Pomiar",
-#                     "$\\frac{\\partial{q_l}}{\\partial{c_{wH2O}}}$",
+#                     "$\\frac{\\partial{q_l}}{\\partial{c_{wH_2O}}}$",
 #                     "$\\frac{\\partial{q_l}}{\\partial{m_{1H2O}}}$",
 #                     "$\\frac{\\partial{q_l}}{\\partial{c_{wk}}}$", 
 #                     "$\\frac{\\partial{q_l}}{\\partial{m_l}}$",
@@ -368,7 +368,7 @@ warts_lopatowski <- cbind(warts_lopatowski, t1h2od(m1h2o = pomiary_mod_lopatowsk
 
 ```
 
-Poszczególne niepewności pomiarowe przyjęliśmy jako: niepewność pomiarowa $u_B(c_{wH_2O}) = 0$ (bierzemy wartość tablicową), niepewność $u_B(m_{1H2O}) = \frac{0.05}{\sqrt{3}}$, $u_B(c_{wk})=517.22$, $u_B(m_l)=\frac{0.0001}{\sqrt{3}}$, $u_B(T_k)=\frac{0.0001}{\sqrt{3}}$, $u(T_{1H_2O})=\frac{0.0001}{\sqrt{3}}$.
+Za poszczególne niepewności pomiarowe przyjęliśmy: $u_B(m_{1H_2O}) = \frac{0.05}{\sqrt{3}}$, $u_B(c_{wk})=517.22$, $u_B(m_l)=\frac{0.0001}{\sqrt{3}}$, $u_B(T_k)=\frac{0.0001}{\sqrt{3}}$, $u(T_{1H_2O})=\frac{0.0001}{\sqrt{3}}$. Podobnie jak w poprzednim eksperymencie, wartość ciepła właściwego wody uznano za nieobarczoną niepewnością pomiarową.
 
 Przedstawmy teraz wyliczone wartości ciepła topnienia lodu wraz z ich niepewnościami.
 
@@ -414,17 +414,17 @@ wyniki <- rbind(wyniki, wyniki_lopatowski)
 p <- ggplot(as.data.frame(pomiary_mod), aes(x=V3, y=wyniki)) + geom_point() +
    geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
    labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
-   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 1")
+   labs(title = "Zależność wyliczonego ciepła topnienia lodu od masy", subtitle = 'Seria 1') 
 p
 p <- ggplot(wyniki_wozniak, aes(x=V3, y=wyniki)) + geom_point() +
    geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
    labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
-   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 2")
+   labs(title = "Zależność wyliczonego ciepła topnienia lodu od masy", subtitle = 'Seria 2') 
 p
 p <- ggplot(wyniki_lopatowski, aes(x=V3, y=wyniki)) + geom_point() +
    geom_errorbar(aes(ymin=wyniki-bledy, ymax=wyniki+bledy)) +
    labs(x = "Masa początkowa wody[kg]", y = "Ciepło topnienia lodu[J/kg]") +
-   ggtitle("Zależność wyliczonego ciepła topnienia lodu od masy Seria 3")
+   labs(title = "Zależność wyliczonego ciepła topnienia lodu od masy", subtitle = 'Seria 3') 
 p
 
 ```
