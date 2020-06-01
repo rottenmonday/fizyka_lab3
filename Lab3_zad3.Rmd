@@ -2,7 +2,7 @@
 title: "Fizyka 2"
 subtitle: "Laboratorium 3 - Ciepło właściwe"
 author: "Krzysztof Woźniak, Krzysztof Łopatowski, Aleksander Wiśniewski"
-date: "28 05 2020"
+date: "Maj 2020"
 header-includes:
    - \usepackage{amsmath}
    - \usepackage{gensymb}
@@ -17,6 +17,7 @@ library(knitr)
 library(kableExtra)
 source('Lab3_zad3_derivs.R')
 source('Lab3_zad2_derivs.R')
+source('Lab3_zad1_derivs.R')
 options(OutDec= ",", scipen = 999)
 ```
 
@@ -34,56 +35,70 @@ ck <- "c_k"
 
 ## Cel
 
-Choć krok ten jest nieobowiązkowy celem eksperymentu jest wyznaczenie wartości ciepła właściwego wody w warunkach domowyc, by utrwalić w praktyce wiedzę teoretyczną i "pobawić" się w naukowca.
+Celem eksperymentu jest wyznaczenie wartości ciepła właściwego wody w warunkach domowych.
 
 ## Opis eksperymentu
 
-Ciepło właściwe jest stosunkiem potrzebnej energi do zmmieny temperatury o jeden stopień Kelwina/Celcjusza ciała o masie 1kg. 
-By wyznaczyć tę wartość dla wody potrzebujemy zatem 3 informaci. 
-Masy wody, różnicy temperatur i ilości dostarczonej energii zmienionej na energię kinetyczną cząstek, w tym przypadku wody. 
+Ciepło właściwe to stosunek energii potrzebnej do zmiany temperatury ciała o masie 1kg o jeden  Kelwina.
+Do obliczenia ciepła właściwego wykorzystuje się następujący wzór:
 $$
-c_w = \frac{Q}{m * \Delta T}
+c_w = \frac{Q}{m * \Delta T},
 $$
+gdzie Q to ilość dostarczącej energii, m to masa ciała, $\Delta T$ to różnica temperatur.
+Do wyznaczenia dostarczonej energii wykorzystano wzór:
+$$
+Q = P \cdot \Delta t,
+$$
+gdzie P to moc grzałki, a $\Delta t$ to czas ogrzewania.
 
-Ponieważ eksperyment będzie przeprowadzany w warunkach domowych skorzystamy z dostępnych przyrządów i zastosujemy pewne uproszczenia. 
-Do wyznaczenia energii dostarczonej wykorzystamy czajnik elektryczny o pewnej mocy grzałki i stoper. 
-$$
-Q = P * t
-$$
-Założymy, że cała energia pochodząca z grzałki podgrzewała wodę (100% wydajności grzałki, co jest bardzo mało prawdopodobne). 
-W roli stopera użyty zostanie smartphon.
-Do pomiaru masy użyta zostanie waga kuchenna sprężynowa. 
-Zakładamy przy tym, że przy przelewaniu wody do czajnika cała woda zostanie przelana, oraz że w czajniku nie znajduje się przed dolaniem ani kropla wody. 
-W trakcie podgrzewania część wody wyparowuje jednak świadomie zaniedbujemy te utratę masy.
 
 Ostateczny wzór użyty do wyznaczenia wartośći ciepła właściwego
 $$
 c_{H_2O} = \frac{P * \Delta t}{m *  \Delta T}
 $$
-Gdzie $P$ to moc grzałki czajnika, $m$ to masa podgrzewanej wody, $\Delta t$ to ilość czasu potrzebna na podgrzanie wody do temperatury ok. 100 stopni Celcjusza, $\Delta T$ to różnica temperatur po podgrzaniu i przed podgrzaniem.
+
+
+## Założenia
+
+Dla uproszczenia obliczen założono szczelność układu.
 
 ## Układ eksperymentalny
 
+![Układ eksperymentalny](zad1_pic.jpg)
 
-Pomiary wykonywane były przy użyciu termometru bimetalowego z zakresem -40+1000°C, dokładnością ±0.75%±3cyfry, rozdzielczość 1°C. 
-Waga kuchenna analogowa sprężynowa z dokładnością 10 g. 
-Czajnik użyty do gotowania wody ma moc znamionową 1850-2200W. 
-Do mierzenia czasu użyto dwóch różnych smartphonów. 
-Szybki eksperyment z włączeniem i wyłączeniem stopera wykazał czas reakcji człowieka na około 160 ms.
-Odliczanie było kończone jeżeli miernik pokazał liczbę >=100, i odczyt temperatury następował zaraz po tym. 
-Po odczytaniu temperatury gorącą wodę ponownie mierzono używając tej samej wagi. 
-Ważenie składało się z dwóch pomiarów, czasem trzeba było wstrząsnąć wagą. 
-Woda używana pochodziła z instalacji domowej (z kranu); prawdopodobnie była ona bardzo twarda.
+Pomiary wykonywane były przy użyciu:
+
+\begin{itemize}
+  \item termometru bimetalowego o zakresie -40+1000°C, z dokładnością ±0.75%±3 cyfry i rozdzielczość 1°C
+  \item wagi kuchennej analogowej, sprężynowej, o dokładności 10g
+  \item czajnika elektrycznego o mocy znamionowej 1850-2200W
+  \item dwóch telefonów komórkowych z funkcją stopera
+\end{itemize}
+
+Czas reakcji eksperymentatora obliczono na około 160ms za pomocą eksperymentu z włączeniem i wyłączeniem stopera.
+Odczytu temperatury dokonywany niezwłocznie po wyświetleniu przez miernik liczby większej lub równej 100. Woda używana do eksperymentu pochodziła z instalacji domowej.
 
 
 
 
-## Wyniki
+## Dane eksperymentalne
 
-## Analiza niepewnośći
+```{r echo = FALSE}
+pom1 <- as.data.frame(read_excel(path = "zad1.xlsx"))
+power <- 1850
+cww <- power * pom1$t / (pom1$m * (pom1$Tk - pom1$Tp))
+pom1 <- cbind(pom1, deltaT = pom1$Tk - pom1$Tp, cww = cww)
+pom1 <- pom1[, c(1, 2, 3, 5, 4, 6)]
 
-Niepewności poszczególnych pomiarów są typu B. 
-Niepewność wyznaczonej wartości liczymy z prawa propagacji niepewności.
+kable(pom1, caption="Zestawienie wyników pomiarów i wyznaczonego ciepła właściwego wody", format = "latex", escape = FALSE, align = 'c', col.names = c("$m [kg]$", "$T_p [\\degree C]$", "$T_{k} [\\degree C]$", "$\\Delta T [\\degree C]$", "$\\Delta t [s]$",  "$c_{wH_2O} [\\frac{J}{kg * K}]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+```
+
+\newpage
+
+## Analiza niepewności
+
+Wszystkie pomiary obarczone są niepewnością typu B. Niepewność wyznaczonej wartości obliczono z prawa propagacji niepewności.
 
 $$
 u_B(c_{H_2O}) = \sqrt{
@@ -106,12 +121,44 @@ $$
 \frac{\partial c}{\partial \Delta T} = -\frac{P*\Delta t}{m \Delta T ^2}
 $$
 
+Przyjęto następujące wartości niepewności typu B: $u_B(P) = \frac{350}{\sqrt{3}}, u_B(m) = \frac{0,06}{\sqrt{3}}, u_B(\Delta T) = \frac{2}{\sqrt{3}}, u_B(\Delta t) = \frac{0,21}{\sqrt{3}}$.
+
+```{r echo = FALSE}
+niepP <- 350 / sqrt(3)
+niepm <- 0.06 / sqrt(3)
+niept <- 0.21 / sqrt(3)
+niepT <- 2 / sqrt(3)
+
+warPd <- z1Pd(t = pom1$t, m = pom1$m, T = pom1$deltaT, P = power)  
+wartd <- z1td(t = pom1$t, m = pom1$m, T = pom1$deltaT, P = power) 
+warTd <- z1Td(t = pom1$t, m = pom1$m, T = pom1$deltaT, P = power) 
+warmd <- z1md(t = pom1$t, m = pom1$m, T = pom1$deltaT, P = power) 
+
+totalNiep <- sqrt(niepP^2 * warPd^2 + 
+                    niepm^2 * warmd^2 + 
+                    niept^2 * wartd^2 + 
+                    niepT^2 * warTd^2)
+pom1 <- cbind(pom1, niep = totalNiep)
+
+kable(pom1, caption="Zestawienie wyników pomiarów i wyznaczonego ciepła właściwego wody z niepewnościami", format = "latex", escape = FALSE, align = 'c', col.names = c("$m [kg]$", "$T_p [\\degree C]$", "$T_{k} [\\degree C]$", "$\\Delta T [\\degree C]$", "$\\Delta t [s]$",  "$c_{wH_2O} [\\frac{J}{kg * K}]$", "$u_B(c_{H_2O}) [\\frac{J}{kg * K}]$")) %>%
+   kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
+
+```
+
+
 ## Wnioski
 
-Wartośc tablicowa ciepła właściwego wody wynosi około $4190 \frac{J}{kg * K}$. 
-Wartość ta nie znajduje się w przedziałach niepewności wyników, co śwaidczy o grubym błędzie w pomiarach parametrów. 
-Wynikać to może z założeń dotyczących wydajności grzałki;
-inną możliwością może być stara waga.
+Wartośc tablicowa ciepła właściwego wody wynosi około $4183 \frac{J}{kg \cdot K}$. 
+Wartość ta nie znajduje się w przedziałach niepewności wyników, co świadczy o grubym błędzie pomiarów.
+Wynikać to może z przyjętych założeń lub wad sprzętu. Z powodu wyniku znacznie odbiegającego od wartości tablicowej w kolejnych częściach zadania do obliczeń wykorzystano wartość tablicową.
+
+
+
+
+
+\newpage
+
+
 
 # Wyznaczenie ciepła właściwego kalorymetru
 
@@ -121,7 +168,7 @@ Celem drugiego zadania jest wyznaczenie ciepła właściwego kalorymetru.
 
 ## Opis eksperymentu
 
-W chwili początkowej kalorymetr o masie $`r b`$ wypełniony jest wodą o masie $`r g`$. Wewnątrz kalorymetru panuje stan równowagi termodynamicznej, czyli temperatura kalorymetru jest równa temperaturze wody i wynosi $`r e`$. Dolanie do kalorymetru wody o masie $`r c`$ i temperaturze $`r d`$ > $`r e`$ spowoduje oddanie części energii dolanej wody do kalorymetru i wody wcześniej się w nim znajdującej, ponieważ temperatura dolewanej wody jest większa niż temperatura układu. Po pewnym czasie układ osiągnie stan równowagi termodynamicznej, czyli temperatura wymieszanej wody oraz kalorymetru będzie taka sama i równa $`r f`$. Bilans energetyczny opisujący takie zdarzenie jest następujący:
+W chwili początkowej kalorymetr o masie $`r b`$ wypełniony był wodą o masie $`r g`$. Wewnątrz kalorymetru panował stan równowagi termodynamicznej, czyli temperatura kalorymetru była równa temperaturze wody i wynosiła $`r e`$. Dolanie do kalorymetru wody o masie $`r c`$ i temperaturze $`r d`$ > $`r e`$ spowodowało oddanie części energii dolanej wody do kalorymetru i wody wcześniej się w nim znajdującej, ponieważ temperatura dolewanej wody była większa niż temperatura układu. Po pewnym czasie układ osiągnął stan równowagi termodynamicznej - temperatura wymieszanej wody oraz kalorymetru była taka sama i równa $`r f`$. Bilans energetyczny opisujący takie zdarzenie jest następujący:
 
 $$`r c` `r a`(`r d` - `r f`) = `r g``r a`(`r f` - `r e`) + `r b`c_{wk}(`r f` - `r e`)$$
 Lewa strona równania opisuje energię oddaną przez dolaną wodę, natomiast prawa strona energię otrzymaną przez kalorymetr oraz wodę, która się w nim znajdowała. Po przeniesieniu pierwszego składnika prawej strony na lewą oraz podzieleniu równania przez $`r b`(`r f` - `r e`)$ otrzymano wzór na ciepło właściwe kalorymetru:
@@ -167,7 +214,7 @@ kable(pom3, caption="Seria 3", format = "latex", escape = FALSE, align = 'c', co
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 ```
 
-Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatniej kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody jako, wartość nieobarczoną błędem, przyjęto 4183 $\frac{J}{kg \cdot K}$.
+Pierwsze pięć kolumn przedstawia dane zmierzone podczas eksperymentu. W ostatniej kolumnie zawarto obliczoną wartość ciepła właściwego kalorymetru. Masa kalorymetru wynosi $m_k = 0,765 kg$, a za ciepło właściwe wody jako wartość nieobarczoną błędem przyjęto 4183 $\frac{J}{kg \cdot K}$.
 
 ## Analiza niepewności pomiarowych
 
@@ -268,7 +315,7 @@ ggplot(df[11:15, ], aes(x=x, y=y)) + geom_point() +
 
 ```
 
-Punkty przedstawione na wykresie pokazują, że ciepło właściwe kalorymetru praktycznie nie zmienia się w zależności od masy początkowej wody. Taki wynik nie powinien dziwić - ciepło właściwe kalorymetru to wartość stała i nie powinno zależeć od znajdującej się w kalorymetrze wody. Warto zwrócić uwagę na znacząco rosnące niepewności obliczanego ciepła właściwego kalorymetru. Po bliższym zbadaniu można stwierdzić, że znaczna część tej niepewności wynika z niedokładności masy i temperatury wody dolewanej. 
+Punkty przedstawione na wykresie pokazują, że ciepło właściwe kalorymetru praktycznie nie zmienia się w zależności od masy początkowej wody. Taki wynik nie powinien dziwić - ciepło właściwe kalorymetru jest wartością stałą i nie powinno zależeć od masy i temperatury znajdującej się w nim wody. Warto zwrócić uwagę na znacząco rosnące niepewności obliczanego ciepła właściwego kalorymetru. Po bliższym zbadaniu można stwierdzić, że znaczna część tej niepewności wynika z niedokładności masy i temperatury wody dolewanej. 
 
 ## Wyniki i analiza
 
@@ -303,24 +350,23 @@ niepew <- min(tab_niepew[, 7])
 
 ## Cel
 
-W zadaniu trzecim będziemy chcieli wyznaczyć ciepło topnienia lodu, korzystając z kalorymetru napełnionego wodą, do którego dodajemy kostki lodu.
+Celem zadania było wyznaczenie ciepło topnienia lodu przy pomocy kalorymetru napełnionego wodą, do której dodawano kostki lodu.
 
 ## Opis eksperymentu
 
-Do kalorymetru o znanej masie i cieple właściwym wlewamy pewną początkową ilość wody $m_{1H_2O}$. Czekamy na ustalenie się równowagi termodynamicznej i mierzymy temperaturę układu. Następnie do układu dodajemy kostkę lodu o znanej masie i ponownie czekamy na ustalenie się równowagi termodynamicznej. 
+Do kalorymetru o znanej masie i cieple właściwym wlano pewną początkową ilość wody $m_{1H_2O}$. Po ustaleniu się równowagi termodynamicznej zmierzono temperaturę układu. Następnie do układu dodano kostkę lodu o znanej masie i poczekano na ustalenie się równowagi termodynamicznej. 
 
-Bilans energetyczny takiego układu wygląda tak:
+Bilans energetyczny takiego układu wygląda następująco:
 
-$$ q_lm_l+m_lc_{w H_2O}T_k = m_{1H_2O}c_{wH_2O}(T_{1H_2O}-T_k) + m_kc_{wk}(T_{1H_2O}-T_k)$$
-Gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH_2O}$ to ciepło właściwe wody (bierzemy ciepło właściwe tablicowe, ponieważ to wyliczone w zadaniu 1 ma zbyt odbiegające wartości), $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w 2 zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H_2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H_2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, $m_k$ to masa kalorymetru.
+$$ q_lm_l+m_lc_{w H_2O}T_k = m_{1H_2O}c_{wH_2O}(T_{1H_2O}-T_k) + m_kc_{wk}(T_{1H_2O}-T_k),$$
+gdzie $q_l$ jest ciepłem topnienia lodu, $m_l$ to masa wrzucanego lodu, $c_{wH_2O}$ to ciepło właściwe wody (wartość tablicowa), $c_{wk}$ to ciepło właściwe kalorymetru wyliczone w drugim zadaniu, $T_k$ to temperatura końcowa układu, $m_{1H_2O}$ to masa wody w kalorymetrze przed dodaniem lodu, $T_{1H_2O}$ to temperatura układu przed dodaniem lodu, $T_k$ to temperatura końcowa układu, a $m_k$ to masa kalorymetru.
 
-Chcemy z tego wzoru wyznaczyć wzór na ciepło topnienia lodu. Po prostych przekształceniach równania otrzymamy:
+Po prostych przekształceniach równania otrzymano wzór na ciepło topnienia lodu:
 
 $$ q_l = \frac{(m_{1H_2O}c_{wH_2O} + m_kc_{wk})(T_{1H_2O}-T_k)}{m_l} - c_{wH_2O}T_k$$
 
 ## Dane eksperymentalne
 
-Korzystając z pomiarów zapisanych przy wykonywaniu wirtualnego laboratorium, wypiszemy teraz dane oraz otrzymaną wartość ciepła topnienia lodu dla kolejnych pomiarów.
 
 ```{r tabela_topnienie1, message=FALSE, warning=FALSE}
 pomiary <- as.data.frame(read_excel("topnienie_Alek.xlsx"))
@@ -353,19 +399,21 @@ pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, wyniki_wozniak)
 wyniki_lopatowski <- ((pomiary_mod_lopatowski[,3]*cw_h2o + m_kalor*cw_kalor)*(pomiary_mod_lopatowski[,1]-pomiary_mod_lopatowski[,2])/m_lodu)-(cw_h2o*pomiary_mod_lopatowski[,2])
 pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, wyniki_lopatowski)
 
-kable(pomiary_mod, caption="Pomiary i wartości ciepła topnienia Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
+kable(pomiary_mod, caption="Wyniki pomiarów i wartości ciepła topnienia Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
-kable(pomiary_mod_wozniak, caption="Pomiary i wartości ciepła topnienia Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
+kable(pomiary_mod_wozniak, caption="Wyniki pomiarów i wartości ciepła topnienia Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
-kable(pomiary_mod_lopatowski, caption="Pomiary i wartości ciepła topnienia Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
+kable(pomiary_mod_lopatowski, caption="Wyniki pomiarów i wartości ciepła topnienia Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
 
 ```
 
-W wyliczeniach przyjmowaliśmy za każdym razem:
+\newpage
+
+Do obliczeń przyjęto:
 
 ```{r tabela_wart_stalych, message=FALSE, warning=FALSE}
 stale <- simplify2array(list(c("Masa lodu [kg]","Masa kalorymetru [kg]","Ciepło właściwe wody [J/kg*K]", "Ciepło właściwe kalorymetru [J/kg*K]"), c(m_lodu,m_kalor,cw_h2o,cw_kalor)))
@@ -379,7 +427,7 @@ kable(stale, caption="Wartości stałych", format = "latex", escape = FALSE, ali
 
 Otrzymane wartości ciepła topnienia lodu każdorazowo obarczone są pewną niepewnością obliczeniową typu B, która wynika z niedokładności urządzeń pomiarowych oraz niepewności wartości ciepła właściwego kalorymetru, wyliczonego w poprzednim zadaniu.
 
-Niepewność typu B wartości ciepła topnienia lodu obliczymy metodą propagacji niepewności:
+Niepewność wartości ciepła topnienia lodu obliczono metodą propagacji niepewności:
 
 
 $$u_B(q_l)=\sqrt{
@@ -451,9 +499,8 @@ warts_lopatowski <- cbind(warts_lopatowski, t1h2od(m1h2o = pomiary_mod_lopatowsk
 
 ```
 
-Za poszczególne niepewności pomiarowe przyjęliśmy: $u_B(m_{1H_2O}) = \frac{0.05}{\sqrt{3}}$, $u_B(c_{wk})=517.22$, $u_B(m_l)=\frac{0.0001}{\sqrt{3}}$, $u_B(T_k)=\frac{0.0001}{\sqrt{3}}$, $u(T_{1H_2O})=\frac{0.0001}{\sqrt{3}}$. Podobnie jak w poprzednim eksperymencie, wartość ciepła właściwego wody uznano za nieobarczoną niepewnością pomiarową.
+Za poszczególne niepewności pomiarowe przyjęto: $u_B(m_{1H_2O}) = \frac{0.05}{\sqrt{3}}$, $u_B(c_{wk})=517.22$, $u_B(m_l)=\frac{0.0001}{\sqrt{3}}$, $u_B(T_k)=\frac{0.0001}{\sqrt{3}}$, $u(T_{1H_2O})=\frac{0.0001}{\sqrt{3}}$. Podobnie jak w poprzednim eksperymencie, wartość ciepła właściwego wody uznano za nieobarczoną niepewnością pomiarową.
 
-Przedstawmy teraz wyliczone wartości ciepła topnienia lodu wraz z ich niepewnościami.
 
 ```{r wyniki_niepewnosci, message=FALSE, warning=FALSE}
 niepewnosc_cwh2o <- 0
@@ -472,18 +519,17 @@ pomiary_mod <- cbind(pomiary_mod, bledy)
 pomiary_mod_wozniak <- cbind(pomiary_mod_wozniak, bledy_wozniak)
 pomiary_mod_lopatowski <- cbind(pomiary_mod_lopatowski, bledy_lopatowski)
 
-kable(pomiary_mod, caption="Wartości ciepła topnienia i niepewności Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
+kable(pomiary_mod, caption="Wartości ciepła topnienia lodu wraz z niepewnościami Seria 1", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 
-kable(pomiary_mod_wozniak, caption="Wartości ciepła topnienia i niepewności Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
+kable(pomiary_mod_wozniak, caption="Wartości ciepła topnienia lodu wraz z niepewnościami Seria 2", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
-kable(pomiary_mod_lopatowski, caption="Wartości ciepła topnienia i niepewności Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
+kable(pomiary_mod_lopatowski, caption="Wartości ciepła topnienia lodu wraz z niepewnościami Seria 3", format = "latex", escape = FALSE, align = 'c', col.names = c("$T_{1H_2O}[C]$","$T_k[C]$","$m_{1H_2O}[kg]$","$c_t[J/kg]$", "$u_B(c_t)[J/kg]$")) %>%
    kable_styling(position="center", latex_options = c("striped", "HOLD_position"))
 ```
 
 ## Wykresy
 
-Prześledźmy jeszcze zależność wartości wyliczonego ciepła topnienia lodu od masy początkowej wody w kalorymetrze, wraz zaznaczonymi niepewnościami:
 
 ```{r zaleznosc_cw_od_m1, message=FALSE, warning=FALSE}
 
@@ -512,7 +558,7 @@ p
 
 ```
 
-## Wynik i analiza
+## Wyniki i analiza
 
 ```{r wartosci, message=FALSE, warning=FALSE}
 srednia <- mean(wyniki[,4])
@@ -520,8 +566,8 @@ err <- max(wyniki[,5])
 
 ```
 
-Jako wynik naszych obliczeń weźmiemy średnią arytmetyczną wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. W takim razie wyliczona przez nas wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg].
+Jako wynik obliczeń przyjęto średnią arytmetyczną uzyskanych wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. Ostatecznie wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg].
 
 Większość wartości niepewności wynika z niepewności pomiaru ciepła właściwego kalorymetru, która to niepewność z kolei wynika z dużej niedokładności podziałki w wirtualnym laboratorium. 
 
-Wartości wyliczonego ciepła topnienia lodu w zasadzie nie zależą od masy początkowej wody. Jedyne co udaje nam się przez zwiększenie masy początkowej wody to zwiększenie precyzji obliczeń - niepewności maleją.
+Wartości wyliczonego ciepła topnienia lodu w zasadzie nie zależą od masy początkowej wody, jednak jej zwiększenie pozwala zmniejszyć niepewności. 
