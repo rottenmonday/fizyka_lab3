@@ -31,6 +31,9 @@ f <- "T_k"
 g <- "m_{1H_2O}"
 ck <- "c_k"
 ```
+![](tab.png)
+
+
 # Wyznaczenie ciepła właściwego wody
 
 ## Cel
@@ -39,12 +42,12 @@ Celem eksperymentu jest wyznaczenie wartości ciepła właściwego wody w warunk
 
 ## Opis eksperymentu
 
-Ciepło właściwe to stosunek energii potrzebnej do zmiany temperatury ciała o masie 1kg o jeden  Kelwina.
+Ciepło właściwe to stosunek energii potrzebnej do zmiany temperatury ciała o masie 1kg o jeden Kelwin.
 Do obliczenia ciepła właściwego wykorzystuje się następujący wzór:
 $$
 c_w = \frac{Q}{m * \Delta T},
 $$
-gdzie Q to ilość dostarczącej energii, m to masa ciała, $\Delta T$ to różnica temperatur.
+gdzie Q to ilość dostarczonej energii, m to masa ciała, $\Delta T$ to różnica temperatur.
 Do wyznaczenia dostarczonej energii wykorzystano wzór:
 $$
 Q = P \cdot \Delta t,
@@ -327,7 +330,7 @@ niepew <- min(tab_niepew[, 7])
 
 ```
 
-Średnia wartość ciepła właściwego kalorymetru wynosi `r round(sr_cwk, 2)` $\frac{J}{kg \cdot K}$. Za niepewność średniej wartości ciepła przyjęto najmniejszą niepewność spośród obliczonych. Bardzo duże wartości niepewności wiążą się z relatywnie dużymi wartościami pochodnych oraz z dużymi niepewnościami poszczególnych mierzonych wartości. W największym stopniu dotyczy to niepewności towarzyszących masie i temperaturze wody dolewanej. Kolejne wyliczone wartości ciepła właściwego kalorymetru pozostają jednak bardzo zbliżone, więc można przyjąć najniższą niepewność. Ostateczny wynik z przyjętą niepewnością wynosi więc `r round(sr_cwk, 2)`(`r round(niepew, 2)`) $\frac{J}{kg \cdot K}$.
+Średnia wartość ciepła właściwego kalorymetru wynosi `r round(sr_cwk, 2)` $\frac{J}{kg \cdot K}$. Za niepewność średniej wartości ciepła przyjęto najmniejszą niepewność spośród obliczonych. Bardzo duże wartości niepewności wiążą się z relatywnie dużymi wartościami pochodnych oraz z dużymi niepewnościami poszczególnych mierzonych wartości. W największym stopniu dotyczy to niepewności towarzyszących masie i temperaturze wody dolewanej. Kolejne wyliczone wartości ciepła właściwego kalorymetru pozostają jednak bardzo zbliżone, więc można przyjąć najniższą niepewność. Ostateczny wynik z przyjętą niepewnością wynosi więc `r round(sr_cwk, 2)`(`r round(niepew, 2)`) $\frac{J}{kg \cdot K}$. Obliczona wartość jest prawdopodobnie realna.
 
 
 
@@ -566,7 +569,7 @@ err <- max(wyniki[,5])
 
 ```
 
-Jako wynik obliczeń przyjęto średnią arytmetyczną uzyskanych wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. Ostatecznie wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg].
+Jako wynik obliczeń przyjęto średnią arytmetyczną uzyskanych wartości ciepła topnienia lodu, a jako niepewność pomiarową - największą z uzyskanych niepewności. Ostatecznie wartość ciepła topnienia lodu wynosi: `r round(srednia, 2)`(`r round(err, 2)`)[J/kg]. Wartość ta jest bardzo zbliżona do wartości tablicowej.
 
 Większość wartości niepewności wynika z niepewności pomiaru ciepła właściwego kalorymetru, która to niepewność z kolei wynika z dużej niedokładności podziałki w wirtualnym laboratorium. 
 
