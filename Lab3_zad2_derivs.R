@@ -9,10 +9,10 @@
 #ck = (a/b)*(c * (d - f)/(f - e) - g)
 
 
-ad <- function(a, b, c, d, e, f, g)
-{
-  (1/b)*(c * (d - f)/(f - e) - g)
-}
+# ad <- function(a, b, c, d, e, f, g)
+# {
+#   (1/b)*(c * (d - f)/(f - e) - g)
+# }
 
 cd <- function(a, b, c, d, e, f, g)
 {
