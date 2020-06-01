@@ -38,20 +38,20 @@ Choć krok ten jest nieobowiązkowy celem eksperymentu jest wyznaczenie wartośc
 
 ## Opis eksperymentu
 
-Ciepło właściwe jest stosunkiem potrzebnej energi do zmmieny temperatury o jeden stopień ciała o masie 1kg. 
+Ciepło właściwe jest stosunkiem potrzebnej energi do zmmieny temperatury o jeden stopień Kelwina/Celcjusza ciała o masie 1kg. 
 By wyznaczyć tę wartość dla wody potrzebujemy zatem 3 informaci. 
 Masy wody, różnicy temperatur i ilości dostarczonej energii zmienionej na energię kinetyczną cząstek, w tym przypadku wody. 
 $$
 c_w = \frac{Q}{m * \Delta T}
 $$
 
-Ponieważ eksperyment będzie przeprowadzany w warunkach domowych skorzystamy z przyrządów dostępnych i zastosujemy pewne uproszczenia. 
-Do wyznaczenia energi dostarczonej wykorzystamy czajnik elektryczny o pewnej mocy grzałki i stoper. 
+Ponieważ eksperyment będzie przeprowadzany w warunkach domowych skorzystamy z dostępnych przyrządów i zastosujemy pewne uproszczenia. 
+Do wyznaczenia energii dostarczonej wykorzystamy czajnik elektryczny o pewnej mocy grzałki i stoper. 
 $$
 Q = P * t
 $$
-Założymy, że cała energia pochodząca z grzałki podgrzewałą wodę (100% wydajności grzałki, co jest bardzo mało prawdopodobne). 
-W roli stoperu użyty zostanie smartfon.
+Założymy, że cała energia pochodząca z grzałki podgrzewała wodę (100% wydajności grzałki, co jest bardzo mało prawdopodobne). 
+W roli stopera użyty zostanie smartphon.
 Do pomiaru masy użyta zostanie waga kuchenna sprężynowa. 
 Zakładamy przy tym, że przy przelewaniu wody do czajnika cała woda zostanie przelana, oraz że w czajniku nie znajduje się przed dolaniem ani kropla wody. 
 W trakcie podgrzewania część wody wyparowuje jednak świadomie zaniedbujemy te utratę masy.
@@ -64,16 +64,17 @@ Gdzie $P$ to moc grzałki czajnika, $m$ to masa podgrzewanej wody, $\Delta t$ to
 
 ## Układ eksperymentalny
 
+
 Pomiary wykonywane były przy użyciu termometru bimetalowego z zakresem -40+1000°C, dokładnością ±0.75%±3cyfry, rozdzielczość 1°C. 
 Waga kuchenna analogowa sprężynowa z dokładnością 10 g. 
-Czajnik użyty do gotowania wody został uprzednio wyczyszczony 10% roztworem octu, ma moc znamionową 1850-2200W. 
-Do mierzenia czasu użyto dwóch różnych smartfonów. 
-Sposób rozpoczęcia odliczania był "3,2,1,już" co wydawało się zwiększać znacząco średni czas reakcji człowieka; niestety brak danych o ile.
-Szybki eksperyment z włączeniem i wyłączeniem stopera wykazał czas reakcji człowieka na około 160ms.
+Czajnik użyty do gotowania wody ma moc znamionową 1850-2200W. 
+Do mierzenia czasu użyto dwóch różnych smartphonów. 
+Szybki eksperyment z włączeniem i wyłączeniem stopera wykazał czas reakcji człowieka na około 160 ms.
 Odliczanie było kończone jeżeli miernik pokazał liczbę >=100, i odczyt temperatury następował zaraz po tym. 
 Po odczytaniu temperatury gorącą wodę ponownie mierzono używając tej samej wagi. 
 Ważenie składało się z dwóch pomiarów, czasem trzeba było wstrząsnąć wagą. 
 Woda używana pochodziła z instalacji domowej (z kranu); prawdopodobnie była ona bardzo twarda.
+
 
 
 
