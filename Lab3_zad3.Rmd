@@ -29,6 +29,51 @@ f <- "T_k"
 g <- "m_{1H_2O}"
 ck <- "c_k"
 ```
+# Wyznaczenie ciepła właściwego wody
+
+## Cel
+
+Choć krok ten jest nieobowiązkowy celem eksperymentu jest wyznaczenie wartości ciepła właściwego wody w warunkach domowyc, by utrwalić w praktyce wiedzę teoretyczną i "pobawić" się w naukowca.
+
+## Opis eksperymentu
+
+Ciepło właściwe jest stosunkiem potrzebnej energi do zmmieny temperatury o jeden stopień ciała o masie 1kg. 
+By wyznaczyć tę wartość dla wody potrzebujemy zatem 3 informaci. 
+Masy wody, różnicy temperatur i ilości dostarczonej energii zmienionej na energię kinetyczną cząstek, w tym przypadku wody. 
+$$
+c_w = \frac{Q}{m * \Delta T}
+$$
+
+Ponieważ eksperyment będzie przeprowadzany w warunkach domowych skorzystamy z przyrządów dostępnych i zastosujemy pewne uproszczenia. 
+Do wyznaczenia energi dostarczonej wykorzystamy czajnik elektryczny o pewnej mocy grzałki i stoper. 
+$$
+Q = P * t
+$$
+Założymy, że cała energia pochodząca z grzałki podgrzewałą wodę (100% wydajności grzałki, co jest bardzo mało prawdopodobne). 
+W roli stoperu użyty zostanie smartfon.
+Do pomiaru masy użyta zostanie waga kuchenna sprężynowa. 
+Zakładamy przy tym, że przy przelewaniu wody do czajnika cała woda zostanie przelana, oraz że w czajniku nie znajduje się przed dolaniem ani kropla wody. 
+W trakcie podgrzewania część wody wyparowuje jednak świadomie zaniedbujemy te utratę masy.
+
+Ostateczny wzór użyty do wyznaczenia wartośći ciepła właściwego
+$$
+c_{H_2O} = \frac{P * \Delta t}{m *  \Delta T}
+$$
+Gdzie $P$ to moc grzałki czajnika, $m$ to masa podgrzewanej wody, $\Delta t$ to ilość czasu potrzebna na podgrzanie wody do temperatury ok. 100 stopni Celcjusza, $\Delta T$ to różnica temperatur po podgrzaniu i przed podgrzaniem.
+
+## Układ eksperymentalny
+
+
+## Wyniki
+
+## Analiza niepewnośći
+
+## Wnioski
+
+Wartośc tablicowa ciepła właściwego wody wynosi około $4190 \frac{J}{kg * K}$. 
+Wartość ta nie znajduje się w przedziałach niepewności wyników, co śwaidczy o grubym błędzie w pomiarach parametrów. 
+Wynikać to może z założeń dotyczących wydajności grzałki;
+inną możliwością może być stara waga.
 
 # Wyznaczenie ciepła właściwego kalorymetru
 
@@ -50,6 +95,7 @@ $$c_k = \frac{`r a`}{`r b`}(`r c`\frac{`r d` - `r f`}{`r f` - `r e`} - `r g`)$$
 ```{r, echo = FALSE}
 pomiary <- as.data.frame(read_excel(path = "pomiary_wozniak.xlsx", sheet = 'zad2'))
 pomiaryalek <- as.data.frame(read_excel(path = "kalorymetr_Alek.xlsx"))[, 3:7]
+
 cww <- 4183
 mk <- 0.765
 
