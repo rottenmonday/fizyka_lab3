@@ -64,10 +64,46 @@ Gdzie $P$ to moc grzałki czajnika, $m$ to masa podgrzewanej wody, $\Delta t$ to
 
 ## Układ eksperymentalny
 
+Pomiary wykonywane były przy użyciu termometru bimetalowego z zakresem -40+1000°C, dokładnością ±0.75%±3cyfry, rozdzielczość 1°C. 
+Waga kuchenna analogowa sprężynowa z dokładnością 10 g. 
+Czajnik użyty do gotowania wody został uprzednio wyczyszczony 10% roztworem octu, ma moc znamionową 1850-2200W. 
+Do mierzenia czasu użyto dwóch różnych smartfonów. 
+Sposób rozpoczęcia odliczania był "3,2,1,już" co wydawało się zwiększać znacząco średni czas reakcji człowieka; niestety brak danych o ile.
+Szybki eksperyment z włączeniem i wyłączeniem stopera wykazał czas reakcji człowieka na około 160ms.
+Odliczanie było kończone jeżeli miernik pokazał liczbę >=100, i odczyt temperatury następował zaraz po tym. 
+Po odczytaniu temperatury gorącą wodę ponownie mierzono używając tej samej wagi. 
+Ważenie składało się z dwóch pomiarów, czasem trzeba było wstrząsnąć wagą. 
+Woda używana pochodziła z instalacji domowej (z kranu); prawdopodobnie była ona bardzo twarda.
+
+
 
 ## Wyniki
 
 ## Analiza niepewnośći
+
+Niepewności poszczególnych pomiarów są typu B. 
+Niepewność wyznaczonej wartości liczymy z prawa propagacji niepewności.
+
+$$
+u_B(c_{H_2O}) = \sqrt{
+(\frac{\partial c}{\partial P})^2 * u^2_B(P) + 
+(\frac{\partial c}{\partial \Delta t})^2 * u^2_B(\Delta t) +
+(\frac{\partial c}{\partial m})^2 * u^2_B(m) +
+(\frac{\partial c}{\partial \Delta T})^2 * u^2_B(\Delta T)
+} 
+$$
+$$
+\frac{\partial c}{\partial P} = \frac{\Delta t}{m * \Delta T} 
+$$
+$$
+\frac{\partial c}{\partial \Delta t} = \frac{P}{m*\Delta T}
+$$
+$$
+\frac{\partial c}{\partial m} = -\frac{P*\Delta t}{m^2 \Delta T}
+$$
+$$
+\frac{\partial c}{\partial \Delta T} = -\frac{P*\Delta t}{m \Delta T ^2}
+$$
 
 ## Wnioski
 
